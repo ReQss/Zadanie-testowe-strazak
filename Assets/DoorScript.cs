@@ -33,48 +33,46 @@ public class DoorScript : MonoBehaviour
         if (Vector3.Distance(transform.position, player.position) <= interactionRange)
         {
             // sprawdzanie czy gracz jest blisko i podejmowanie akcji
-            if (isDoorDestroyed && Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Te drzwi zostaly zniszczone na zawsze");
-                alertText.text = "Te drzwi zostaly zniszczone na zawsze";
-                alertAnimator.SetTrigger("openAlert");
-                return;
-            }
-            if (Input.GetKeyDown(KeyCode.E) && isDoorNeutralized)
-            {
-                Debug.Log("Te drzwi zostaly zneuatrilizowane");
-                alertText.text = "Te drzwi zostaly zneuatrilizowane";
-                alertAnimator.SetTrigger("openAlert");
-                return;
-            }
-            if (Input.GetKeyDown(KeyCode.E) && (PlayerMovement.currentDangerIndex == dangerLevel))
-            {
-                Debug.Log("Drzwi są w zasięgu - nacisnąłeś E!");
-                alertText.text = "Zneutralizowales drzwi";
-                alertAnimator.SetTrigger("openAlert");
-                animator.SetTrigger("openDoor");
-                isDoorNeutralized = true;
-                dangerLevel = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && (PlayerMovement.currentDangerIndex != dangerLevel))
-            {
-                isDoorDestroyed = true;
-                Debug.Log("You set wrong danger level and lost health");
-                alertText.text = "Ustawiles zly poziom zagrozenia i straciles zycie, drzwi juz na zawsze pozostana zamkniete";
-                objectRenderer.material.color = Color.red;
-                alertAnimator.SetTrigger("openAlert");
-                PlayerMovement.health -= 1;
-            }
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Debug.Log("Danger level is" + dangerLevel);
 
-                dangerLevelUI.text = dangerLevel.ToString();
-                alertText.text = "Te drzwi zostaly zneuatrilizowane";
-                alertAnimator.SetTrigger("Poziom zagrozenia to " + dangerLevel);
-            }
-
+            HandleDoorFunctionality();
         }
 
+    }
+    public void HandleDoorFunctionality()
+    {
+        if (isDoorDestroyed && Input.GetKeyDown(KeyCode.E))
+        {
+            alertText.text = "Te drzwi zostaly zniszczone na zawsze";
+            alertAnimator.SetTrigger("openAlert");
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.E) && isDoorNeutralized)
+        {
+            alertText.text = "Te drzwi zostaly zneuatrilizowane";
+            alertAnimator.SetTrigger("openAlert");
+            return;
+        }
+        if (Input.GetKeyDown(KeyCode.E) && (PlayerMovement.currentDangerIndex == dangerLevel))
+        {
+            alertText.text = "Zneutralizowales drzwi";
+            alertAnimator.SetTrigger("openAlert");
+            animator.SetTrigger("openDoor");
+            isDoorNeutralized = true;
+            dangerLevel = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && (PlayerMovement.currentDangerIndex != dangerLevel))
+        {
+            isDoorDestroyed = true;
+            alertText.text = "Ustawiles zly poziom zagrozenia i straciles zycie, drzwi juz na zawsze pozostana zamkniete";
+            objectRenderer.material.color = Color.red;
+            alertAnimator.SetTrigger("openAlert");
+            PlayerMovement.health -= 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            dangerLevelUI.text = dangerLevel.ToString();
+            alertText.text = "Poziom zagrozenia to " + dangerLevel.ToString();
+            alertAnimator.SetTrigger("openAlert");
+        }
     }
 }

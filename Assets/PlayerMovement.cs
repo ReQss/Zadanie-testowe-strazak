@@ -27,14 +27,30 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Restart gry po śmierci
+        ResetGame();
+        currentHealth.text = health.ToString();
+        // ruch postaci
+        PlayerMove();
+
+        // Zmiana poziomu regulacji
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            currentDangerIndex++;
+            if (currentDangerIndex > 9) currentDangerIndex = 0;
+            currentDangerLevelUI.text = currentDangerIndex.ToString();
+        }
+    }
+    public void ResetGame()
+    {
+        // Restart gry po śmierci
         if (health == 0)
         {
             health = 3;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-
-        currentHealth.text = health.ToString();
-        // ruch postaci
+    }
+    void PlayerMove()
+    {
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
         if (moveX != 0 || moveZ != 0)
@@ -47,13 +63,5 @@ public class PlayerMovement : MonoBehaviour
 
 
         controller.Move(moveDirection * speed * Time.deltaTime);
-
-        // Zmiana poziomu regulacji
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            currentDangerIndex++;
-            if (currentDangerIndex > 9) currentDangerIndex = 0;
-            currentDangerLevelUI.text = currentDangerIndex.ToString();
-        }
     }
 }
