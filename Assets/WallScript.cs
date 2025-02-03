@@ -11,7 +11,6 @@ public class WallScript : MonoBehaviour
     void Start()
     {
         objectRenderer = GetComponent<Renderer>();
-        Cursor.lockState = CursorLockMode.Locked;
         player = GameObject.Find("Player").transform;
     }
 

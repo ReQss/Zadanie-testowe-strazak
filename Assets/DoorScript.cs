@@ -16,6 +16,7 @@ public class DoorScript : MonoBehaviour
 
     void Start()
     {
+        // wczytanie komponentow z gry
         objectRenderer = GetComponent<Renderer>();
         Cursor.lockState = CursorLockMode.Locked;
         animator = GetComponent<Animator>();
@@ -31,6 +32,7 @@ public class DoorScript : MonoBehaviour
 
         if (Vector3.Distance(transform.position, player.position) <= interactionRange)
         {
+            // sprawdzanie czy gracz jest blisko i podejmowanie akcji
             if (isDoorDestroyed && Input.GetKeyDown(KeyCode.E))
             {
                 Debug.Log("Te drzwi zostaly zniszczone na zawsze");
